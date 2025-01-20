@@ -135,7 +135,7 @@ if __name__ == "__main__":
         questions = json.load(open(args.question_file, "r"))
         # labels = json.load(open(args.question_file, 'r'))
         labels = questions
-        answers = [json.loads(q) for q in open(args.result_file)]
+        answers = json.load(open(args.result_file,'r'))
         questions = {question['question_id']: question for question in questions}
         
         resluts = []
@@ -145,7 +145,7 @@ if __name__ == "__main__":
             print(len(list(set(question_ids))))
             # id_map = json.load(open('/home/wmr/VLM/Rel_H/dataset/nocaps/local_id_map.json', 'r')) # only for question_v2_local_so_r_out_box/mask
             # answers_list = {id_map[str(a['question_id'])]: a['text'] for a in answers}
-            answers_list = {a['question_id']: a['text'] for a in answers}
+            answers_list = {a['question_id']: a['answer'] for a in answers}
             # labels = json.load(open(args.question_file, 'r'))
             label_list = {q['question_id']:q['label'] for q in labels }
             result = eval_pope(answers_list, label_list, question_ids, args.error_file)
@@ -156,7 +156,7 @@ if __name__ == "__main__":
         questions = json.load(open(args.question_file, "r"))
         questions = {question['question_id']: question for question in questions}
         labels = json.load(open(args.question_file, 'r'))
-        answers = [json.loads(q) for q in open(args.result_file)]
+        answers = json.load(open(args.result_file,'r'))
 
         
         resluts = []
@@ -164,7 +164,7 @@ if __name__ == "__main__":
             question_ids = json.load(open(args.question_id_file.replace('holder', str(i)) , 'r'))
             print(args.question_id_file.replace('holder', str(i)).split('/')[-1])
             print(len(list(set(question_ids))))
-            answers_list = {a['question_id']: a['text'] for a in answers}
+            answers_list = {a['question_id']: a['answer'] for a in answers}
             # labels = json.load(open(args.question_file, 'r'))
             label_list = {q['question_id']:q['label'] for q in labels}
             result = eval_pope(answers_list, label_list, question_ids, args.error_file)
@@ -175,7 +175,7 @@ if __name__ == "__main__":
         questions = json.load(open(args.question_file, "r"))
         questions = {question['question_id']: question for question in questions}
         labels = json.load(open(args.question_file, 'r'))
-        answers = [json.loads(q) for q in open(args.result_file)]
+        answers = json.load(open(args.result_file,'r'))
 
         
         resluts = []

@@ -1,0 +1,51 @@
+import json
+from sentence_transformers import SentenceTransformer
+from sklearn.metrics.pairwise import cosine_similarity
+import numpy as np
+
+def calculate_cosine_similarity(model_answer, human_label):
+    # load pre-trained sentence-transformer model
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    
+    # text embedding
+    answer_embedding = model.encode([model_answer])
+    label_embedding = model.encode([human_label])
+    
+    # cosine similarity
+    similarity = cosine_similarity(answer_embedding, label_embedding)[0][0]
+    return similarity
+
+def process_results(json_file):
+    # read JSON file
+    with open(json_file, 'r') as f:
+        results = json.load(f)
+    
+    similarities = []
+    
+    if isinstance(results, dict):
+        results = [results]
+    
+    # process each question
+    for result in results:
+        model_answer = result['answer']
+        human_label = result['labeled reason']
+        
+        # similarity
+        similarity = calculate_cosine_similarity(model_answer, human_label)
+        similarities.append({
+            'question_id': result['question id'],
+            'similarity': similarity
+        })
+    
+    # average similarity
+    avg_similarity = np.mean([s['similarity'] for s in similarities])
+    
+    return similarities, avg_similarity
+
+if __name__ == "__main__":
+    json_file = "results.json"
+    similarities, avg_similarity = process_results(json_file)
+    
+    print(f"平均余弦相似度: {avg_similarity:.4f}")
+    for sim in similarities:
+        print(f"问题 ID {sim['question_id']}: 相似度 = {sim['similarity']:.4f}")

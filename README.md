@@ -177,6 +177,19 @@ The evaluation script will output:
 
 Note: By default, we use `all-MiniLM-L6-v2` as the sentence encoder, which is a lightweight yet effective model. You can modify the model name in the `calculate_cosine_similarity` function if you prefer to use other pre-trained models.
 
+## 分工
+黄叙川：
+1. 阅读论文、准备presentation PPT、presentation
+2. 复现论文中测试LLaVA的结果
+3. 基于论文已有benchmark调用glm-4v-flash的API进行测试、
+4. 撰写论文
+5. 考虑R-Bench中欠缺考虑的情况，构思test cases进行补充
+
+吕嘉楠：
+1. 阅读论文，准备pre和ppt
+2. 在glm-4v-plus-0111和kimi上测试
+3. 撰写论文
+4. 构建subset寻找原始R-bench存在的问题
 
 ## Acknowledge
 The evaluation code is based on [POPE](https://github.com/AoiDragon/POPE).
